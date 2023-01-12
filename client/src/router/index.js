@@ -6,6 +6,9 @@ import ListDoctorView from '../views/ListDoctorView.vue'
 import Appointment from '../views/Appointment.vue'
 import Payment from '../views/Payment.vue';
 import StatusAppointment from '../views/StatusAppointment.vue'
+import DoctorLoginView from '../views/DoctorLoginView.vue'
+import DoctorView from '../views/DoctorView.vue'
+import DoctorAppointment from '../views/DoctorAppointment.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -46,6 +49,21 @@ const router = createRouter({
       component: StatusAppointment,
     },
     {
+      path: "/doctor-login",
+      name: "doctor-login",
+      component: DoctorLoginView,
+    },
+    {
+      path: "/doctor-view",
+      name: "doctor-view",
+      component: DoctorView,
+    },
+    {
+      path: "/doctor-appointment",
+      name: "doctor-appointment",
+      component: DoctorAppointment,
+    },
+    {
       path: "/about",
       name: "about",
       // route level code-splitting
@@ -57,7 +75,9 @@ const router = createRouter({
 });
 
 router.beforeEach(async (to, from) => {
-  if (!localStorage.access_token && to.name === 'favorite') {
+  if (!localStorage.access_token && to.name === 'doctor') {
+    return { name: 'login' }
+  } else if(!localStorage.access_token && to.name === 'appointment'){
     return { name: 'login' }
   } else if( (localStorage.access_token && to.name === 'login') || (localStorage.access_token && to.name === 'register') ) {
     return { name: 'home' }

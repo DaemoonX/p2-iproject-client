@@ -149,6 +149,23 @@ export const useDoctorStores = defineStore('doctor', {
                 console.log(error);
             }
         },
+        async fetchDoctorAppointment(){
+            try {
+                let {data} = await axios({
+                    method: 'GET',
+                    url: 'http://localhost:3000/doctor/appointment',
+                    headers:{
+                        access_token: localStorage.getItem('access_token')
+                    }
+                })
+                console.log(data.data);
+                console.log(data.data);
+                this.doctors = data.data
+
+            } catch (error) {
+                console.log(error);
+            }
+        },
         async payment(){
             try {
                 console.log('udah di klik');
@@ -185,6 +202,40 @@ export const useDoctorStores = defineStore('doctor', {
                   })
             } catch (error) {
                 console.log(error);
+            }
+        },
+        async handleLoginDoctor(email, password){
+            try {
+                let {data} = await axios({
+                    method: 'POST',
+                    url: 'http://localhost:3000/doctor/login',
+                    data:{
+                        email,
+                        password
+                    }
+                })
+                localStorage.setItem('access_token', data.access_token)
+                console.log(data);
+                this.isLogin = true
+                this.router.push('/doctor-view')
+            } catch (error) {
+                console.log(error);
+            }
+        },
+        async fetchProfileDoctor(){
+            try {
+                let {data} = await axios({
+                    method: 'GET',
+                    url: 'http://localhost:3000/doctor/detail',
+                    headers:{
+                        access_token: localStorage.getItem('access_token')
+                    }
+                })
+                console.log(data);
+                this.doctors = data
+            } catch (error) {
+                console.log(error);
+                
             }
         }
 

@@ -58,8 +58,8 @@ export default {
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
           <ul class="navbar-nav ms-auto align-items-center">
             <li class="nav-item">
-              <a  class="nav-link mx-2" href=""
-                
+              <a  class="nav-link mx-2" href="" v-if="isLogin === false"
+                @click="this.$router.push('/doctor-login')"
                 > Login as a Doctor</a
               >
             </li>
